@@ -1,0 +1,48 @@
+            - name: Checkmarx One++ GitHub Action
+  # You may pin to the exact commit or the version.
+  # uses: checkmarx-ts/cxone-plusplus-github-action@9e69646151d1564d227e7979ce9780b422bdf2f4
+  uses: checkmarx-ts/cxone-plusplus-github-action@v2
+  with:
+    # The CxOne server base URL, default is the US1 environment. https://checkmarx.com/resource/documents/en/34965-68630-configure.html#UUID-494287f8-3019-2542-c111-cb147c286bac_id_ASTCLIConfigurationEnvironmentVariables-CLIConfigurationParameters
+    base-uri: https://eu.ast.checkmarx.net/
+    # The CxOne server base URL, default is the US1 environment. https://checkmarx.com/resource/documents/en/34965-68630-configure.html#UUID-494287f8-3019-2542-c111-cb147c286bac_id_ASTCLIConfigurationEnvironmentVariables-CLIConfigurationParameters
+    base-auth-uri: # optional, default is https://iam.checkmarx.net
+    # The CxOne tenant identifier.
+    cx-tenant: torretiago-sedemo
+    # OAuth Client ID for API access
+    cx-client-id: ${{ secrets.CLIENT_ID }}
+    # OAuth client secret key for API access
+    cx-client-secret: ${{ secrets.SECRET }}
+    # Scan project name
+    project-name: # optional, default is ${{ github.repository }}
+    # Additional parameters passed to the CxOne CLI after "scan create"
+    additional-scan-params: # optional, default is 
+    # Turn on debugging for the CxOne CLI and the composite action.
+    cx-cli-debug: # optional
+    # The agent name to use when performing CxOne CLI commands.  This value will show as the "Scan Origin" of each scan.
+    cx-cli-agent: # optional, default is cxonepp-gh-action
+    # Additional parameters to pass to the CxOne CLI (proxy settings, etc) for all CxOne CLI invocations.
+    cx-cli-additional-params: # optional, default is 
+    # The container tag for the build environment where the scan will execute. If not provided, the scan executes in the runner.
+    build-container-tag: # optional
+    # The name of the container registry to use for login.
+    docker-login-registry: # optional, default is docker.io
+    # The username for the container registry login.
+    docker-login-username: # optional, default is 
+    # The password for the container registry login.
+    docker-login-password: # optional, default is 
+    # If true, uploads the Sarif file to create entries on the GitHub security tab during push events.
+    upload-sarif-file: # optional, default is true
+    # If true, attaches the Sarif file to the workflow as an artifact for push or pull request events.
+    attach-sarif-file: # optional
+    # Additional parameters used when compiling reports. Do not add the --filter option; use the "report-filters" input parameter to set filter options.
+    additional-report-params: # optional, default is 
+    # The criteria that selects what to include in any report results.
+    report-filters: # optional, default is --filter "state=TO_VERIFY;PROPOSED_NOT_EXPLOITABLE;CONFIRMED;URGENT"
+    # If true, attaches the SBOM file to the workflow as an artifact.
+    attach-sbom-file: # optional
+    # The SBOM standard format used when generating the SBOM file.
+    sbom-standard: # optional, default is CycloneDxJson
+    # If true, emits the versions of the CxOne CLI and SCA Resolver in the action log.
+    show-versions: # optional, default is true
+          
