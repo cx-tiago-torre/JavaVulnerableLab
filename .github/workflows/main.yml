@@ -31,7 +31,7 @@ jobs:
           # Select a Checkmarx Project Name
           project_name: cx-tiago-torre/JavaVulnerableLab
           # Branch name
-          branch: main
+          branch: master
           # GitHub API Token
           github_token: # optional, default is ${{ github.token }}
           # Additional parameters for AST scan
