@@ -41,7 +41,6 @@ jobs:
                 namespace: # optional, default is ${{ github.repository_owner }}
                 # Pr Number of the pull request that needs the decoration
                 pr_number: # optional, default is ${{ github.event.number }}
-          
                 - name: Upload SARIF file
                   uses: github/codeql-action/upload-sarif@v2
                   with: 
