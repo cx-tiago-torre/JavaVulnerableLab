@@ -7,7 +7,8 @@ name: Checkmarx One Scan
 on:
   push:
     branches:
-      master
+        main
+        master
 
 jobs:
   build:
