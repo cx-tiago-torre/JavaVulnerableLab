@@ -1,48 +1,50 @@
-            - name: Checkmarx One++ GitHub Action
-  # You may pin to the exact commit or the version.
-  # uses: checkmarx-ts/cxone-plusplus-github-action@9e69646151d1564d227e7979ce9780b422bdf2f4
-  uses: checkmarx-ts/cxone-plusplus-github-action@v2
-  with:
-    # The CxOne server base URL, default is the US1 environment. https://checkmarx.com/resource/documents/en/34965-68630-configure.html#UUID-494287f8-3019-2542-c111-cb147c286bac_id_ASTCLIConfigurationEnvironmentVariables-CLIConfigurationParameters
-    base-uri: https://eu.ast.checkmarx.net/
-    # The CxOne server base URL, default is the US1 environment. https://checkmarx.com/resource/documents/en/34965-68630-configure.html#UUID-494287f8-3019-2542-c111-cb147c286bac_id_ASTCLIConfigurationEnvironmentVariables-CLIConfigurationParameters
-    base-auth-uri: # optional, default is https://iam.checkmarx.net
-    # The CxOne tenant identifier.
-    cx-tenant: torretiago-sedemo
-    # OAuth Client ID for API access
-    cx-client-id: ${{ secrets.CLIENT_ID }}
-    # OAuth client secret key for API access
-    cx-client-secret: ${{ secrets.SECRET }}
-    # Scan project name
-    project-name: # optional, default is ${{ github.repository }}
-    # Additional parameters passed to the CxOne CLI after "scan create"
-    additional-scan-params: # optional, default is 
-    # Turn on debugging for the CxOne CLI and the composite action.
-    cx-cli-debug: # optional
-    # The agent name to use when performing CxOne CLI commands.  This value will show as the "Scan Origin" of each scan.
-    cx-cli-agent: # optional, default is cxonepp-gh-action
-    # Additional parameters to pass to the CxOne CLI (proxy settings, etc) for all CxOne CLI invocations.
-    cx-cli-additional-params: # optional, default is 
-    # The container tag for the build environment where the scan will execute. If not provided, the scan executes in the runner.
-    build-container-tag: # optional
-    # The name of the container registry to use for login.
-    docker-login-registry: # optional, default is docker.io
-    # The username for the container registry login.
-    docker-login-username: # optional, default is 
-    # The password for the container registry login.
-    docker-login-password: # optional, default is 
-    # If true, uploads the Sarif file to create entries on the GitHub security tab during push events.
-    upload-sarif-file: # optional, default is true
-    # If true, attaches the Sarif file to the workflow as an artifact for push or pull request events.
-    attach-sarif-file: # optional
-    # Additional parameters used when compiling reports. Do not add the --filter option; use the "report-filters" input parameter to set filter options.
-    additional-report-params: # optional, default is 
-    # The criteria that selects what to include in any report results.
-    report-filters: # optional, default is --filter "state=TO_VERIFY;PROPOSED_NOT_EXPLOITABLE;CONFIRMED;URGENT"
-    # If true, attaches the SBOM file to the workflow as an artifact.
-    attach-sbom-file: # optional
-    # The SBOM standard format used when generating the SBOM file.
-    sbom-standard: # optional, default is CycloneDxJson
-    # If true, emits the versions of the CxOne CLI and SCA Resolver in the action log.
-    show-versions: # optional, default is true
+# Documentation:
+# https://checkmarx.atlassian.net/wiki/spaces/Checkmarx One/pages/6147408761/CI+CD+with+CxSCA+Resolver
+#
+
+name: SCA Resolver Example
+
+on:
+  push:
+    branches:
+      [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+            - name: Checkmarx AST Github Action
+              # You may pin to the exact commit or the version.
+              # uses: Checkmarx/ast-github-action@749fec53e0db0f6404a97e2e0807c3e80e3583a7
+              uses: Checkmarx/ast-github-action@2.0.23
+              with:
+                # Provide the AST portal URL
+                base_uri: https://eu.ast.checkmarx.net/
+                # Provide the Tenant for AST portal URL
+                cx_tenant: torretiago-sedemo
+                # Client ID for AST portal authentication
+                cx_client_id: ${{ secrets.CLIENT_ID }}
+                # Secret key for AST portal authentication
+                cx_client_secret: ${{ secrets.SECRET }}
+                # Select a Checkmarx Project Name
+                project_name: cx-tiago-torre/JavaVulnerableLab
+                # Branch name
+                branch: # optional, default is ${{ github.head_ref || github.ref }}
+                # GitHub API Token
+                github_token: # optional, default is ${{ github.token }}
+                # Additional parameters for AST scan
+                additional_params: --report-format sarif --output-path .
+                # Repository name for PR decoration
+                repo_name: # optional, default is ${{ github.event.repository.name }}
+                # Organization name to create the Pr comment
+                namespace: # optional, default is ${{ github.repository_owner }}
+                # Pr Number of the pull request that needs the decoration
+                pr_number: # optional, default is ${{ github.event.number }}
           
+                - name: Upload SARIF file
+                  uses: github/codeql-action/upload-sarif@v2
+                  with: 
+                    # Path to SARIF file relative to the root of the repository
+                    sarif_file: cx_result.sarif
