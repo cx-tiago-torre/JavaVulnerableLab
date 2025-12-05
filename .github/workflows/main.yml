@@ -33,15 +33,15 @@ jobs:
           # Branch name
           branch: main
           # GitHub API Token
-          github_token: # optional, default is ${{ github.token }}
+       #   github_token: # optional, default is ${{ github.token }}
           # Additional parameters for AST scan
-          additional_params: --report-format sarif --output-path .
+          additional_params: --debug --report-format sarif --output-path .
           # Repository name for PR decoration
-          repo_name: # optional, default is ${{ github.event.repository.name }}
+       #   repo_name: # optional, default is ${{ github.event.repository.name }}
           # Organization name to create the Pr comment
-          namespace: # optional, default is ${{ github.repository_owner }}
+       #   namespace: # optional, default is ${{ github.repository_owner }}
           # Pr Number of the pull request that needs the decoration
-          pr_number: # optional, default is ${{ github.event.number }}
+       #   pr_number: # optional, default is ${{ github.event.number }}
           
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
