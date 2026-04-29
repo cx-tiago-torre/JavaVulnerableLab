@@ -35,7 +35,7 @@ jobs:
           # GitHub API Token
        #   github_token: # optional, default is ${{ github.token }}
           # Additional parameters for AST scan
-          additional_params: --debug --report-format sarif --output-path .
+          additional_params: --scan-types sast,sca,dast --debug --report-format sarif --output-path .
           # Repository name for PR decoration
        #   repo_name: # optional, default is ${{ github.event.repository.name }}
           # Organization name to create the Pr comment
